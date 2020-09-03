@@ -1,26 +1,41 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import store from "./Redux/Store";
+
+import ContactList from "./components/ContactList";
+
+// const contacts = [
+//   { name: "Charles", phone: "124567890" },
+//   { name: "Zeph", phone: "1234567890" },
+//   { name: "smith", phone: "1234567890" },
+// ];
+
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      contacts: [],
+    };
+  }
+
+  componentDidMount() {
+    const storeData = store.getState().contacts;
+    // console.log(storeData);
+    this.setState({
+      contacts: [...storeData],
+    });
+  }
+
+  render() {
+    return (
+      <div>
+        {this.state.contacts.map((contact) => (
+          <ContactList key={contact.name} contact={contact} />
+        ))}
+      </div>
+    );
+  }
 }
 
 export default App;
